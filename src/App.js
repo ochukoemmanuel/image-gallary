@@ -8,9 +8,12 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import { Routes, Route } from 'react-router-dom';
 import Dropdown from './components/Dropdown';
+import SingleImage from './pages/SingleImage';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [images, setImages] = useState([]);
+  const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [term, setTerm] = useState('');
@@ -18,7 +21,7 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     fetch(
-      `https://pixabay.com/api/?key=7848907-e6b3214f8ca532503c2b66514&q=${term}&image_type=photo`
+      `https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&image_type=all`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -46,6 +49,22 @@ function App() {
     };
   });
 
+  const getImage = (id) => {
+    setIsLoading(true);
+    fetch(
+      `https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&id=${id}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.hits.items);
+        setImage(data);
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  console.log(image.hits);
+
   return (
     <>
       <Navbar toggle={toggle} />
@@ -61,13 +80,10 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route
-          path='/*'
-          element={
-            <div>
-              <h1 className='center-content my-20 text-5xl h-screen'>404</h1>
-            </div>
-          }
+          path='/photo/:id'
+          element={<SingleImage images={images} getImage={getImage} />}
         />
+        <Route path='/*' element={<NotFound />} />
       </Routes>
       <Footer />
     </>

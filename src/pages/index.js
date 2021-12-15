@@ -6,7 +6,7 @@ const index = ({ images, isLoading, setTerm }) => {
   return (
     <div>
       <Hero setTerm={setTerm} />
-      <Content images={images} isLoading={isLoading} />
+      <Content images={images} isLoading={isLoading} setTerm={setTerm} />
     </div>
   );
 };

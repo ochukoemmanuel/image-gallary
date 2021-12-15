@@ -2,12 +2,13 @@ import React from 'react';
 import ImageCard from './imageCard';
 import Spinner from '../images/spinner.gif';
 
-const Content = ({ images, isLoading }) => {
+const Content = ({ images, isLoading, setTerm }) => {
   if (!isLoading && images.length === 0) {
     return (
-      <h1 className='text-center text-2xl mx-auto container py-80 my-34'>
-        No images found
-      </h1>
+      <div className='text-center mx-auto container py-80 my-34'>
+        <h1 className=' text-xl font-bold text-gray-700'>No matches found</h1>
+        <p className='text-sm'>Try checking your spellings and try again</p>
+      </div>
     );
   }
   if (isLoading) {
@@ -22,7 +23,7 @@ const Content = ({ images, isLoading }) => {
       <div className='container px-6 mx-auto py-32 flex justify-center'>
         <div className=' text-center grid sm:grid-cols-2 md:grid-cols-3 gap-4'>
           {images.map((image) => (
-            <ImageCard key={image.id} image={image} />
+            <ImageCard key={image.id} image={image} setTerm={setTerm} />
           ))}
         </div>
       </div>

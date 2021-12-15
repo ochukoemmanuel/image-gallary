@@ -1,11 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const imageCard = ({ image }) => {
+const imageCard = ({ image, setTerm }) => {
   const tags = image.tags.split(',');
+
+  // const joined = tags
+  //   .map((el, i) => {
+  //     return `${el}-`;
+  //   })
+  //   .join('')
+  //   .replace(' ', '')
+  //   .trim();
+  // console.log(joined);
+  //
 
   return (
     <div className='max-w-sm rounded overflow-hidden shadow-lg'>
-      <img src={image.webformatURL} className='w-full' alt='img' />
+      <Link to={`/photo/${image.id}`}>
+        <img src={image.webformatURL} className='w-full' alt='img' />
+      </Link>
       <div className='py-6 px-6'>
         <div className='font-bold text-purple-500 text-xl mb-2 text-center '>
           Photo by {image.user}
@@ -27,12 +40,13 @@ const imageCard = ({ image }) => {
       </div>
       <div className='px-6 py-4'>
         {tags.map((tag, index) => (
-          <span
+          <button
+            onClick={() => setTerm(tag)}
             key={index}
             className='cursor-pointer inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 my-1'
           >
             #{tag}
-          </span>
+          </button>
         ))}
       </div>
     </div>

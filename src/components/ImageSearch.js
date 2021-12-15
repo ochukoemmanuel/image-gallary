@@ -23,7 +23,7 @@ const ImageSearch = ({ searchText }) => {
             type='submit'
             className='bg-yellow-500 hover:bg-yellow-700 transition duration-300 ease-in-out border-none text-sm border-4 text-white py-2 px-4 rounded'
           >
-            Serach
+            Search
           </button>
         </div>
       </form>
